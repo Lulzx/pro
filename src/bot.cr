@@ -19,10 +19,9 @@ class EchoBot < Tourmaline::Client
       #   blacklist: %w[figcaption figure div]
       # )
       document = Readability::Document.new(response.body)
-      text = document
+      text = document.content
       text = text.not_nil!
       message.reply(text)
-      return
       access_token = "3330dae43d9a721f632d23a7bb241adc23630a582c3e93c9d6d9d6b6a283"
       content = ["#{text}"]
       response = Telegraph.create_page(access_token, title = "lulzx", author_name = "lulzx", author_url = "https://t.me/lulzx", %|content|, false)
