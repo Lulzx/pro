@@ -1,0 +1,27 @@
+name: tourmaline
+version: 0.16.0
+
+authors:
+  - Chris Watson <chris@watzon.me>
+
+crystal: 0.34.0
+
+dependencies:
+  halite:
+    github: icyleaf/halite
+    branch: master
+
+development_dependencies:
+  ngrok:
+    github: watzon/ngrok.cr
+    version: 0.2.0
+  kemal:
+    github: kemalcr/kemal
+  ameba:
+    github: veelenga/ameba
+    version: ~> 0.10.0
+  spectator:
+    github: icy-arctic-fox/spectator
+    branch: master
+
+license: MIT
