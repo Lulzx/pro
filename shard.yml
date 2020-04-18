@@ -1,0 +1,24 @@
+name: bot
+version: 0.1.0
+
+authors:
+  - lulzx <wiserishabh@gmail.com>
+
+targets:
+  bot:
+    main: src/bot.cr
+
+dependencies:
+  tourmaline:
+    github: protoncr/tourmaline
+    branch: master
+  telegraph:
+    github: lulzx/telegraph
+    branch: master
+  readability:
+    github: joenas/readability.cr
+    version: 0.2.0
+
+crystal: 0.34.0
+
+license: MIT

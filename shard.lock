@@ -1,0 +1,18 @@
+version: 1.0
+shards:
+  halite:
+    github: icyleaf/halite
+    commit: 44c9a3f6ffb9eff1c61c6d7988879b780ab0c311
+
+  readability:
+    github: joenas/readability.cr
+    version: 0.2.0
+
+  telegraph:
+    github: lulzx/telegraph
+    commit: 46b68082fb7f156b574b603a1d6270d41ff2325b
+
+  tourmaline:
+    github: protoncr/tourmaline
+    commit: 6eb445b8d47b1c3cfd71073306210bb4312e947c
+
