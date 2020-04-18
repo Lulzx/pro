@@ -3,8 +3,15 @@ require "http/client"
 require "tourmaline"
 require "telegraph"
 require "json"
+require "myhtml"
 
 class KeyError < Exception; end
+
+def walk(node, level = 0)
+  puts "#{" " * level * 2}#{node.inspect}"
+  node.children.each { |child| walk(child, level + 1) }
+end
+
 
 class EchoBot < Tourmaline::Client
   @[On(:message)]
@@ -12,30 +19,24 @@ class EchoBot < Tourmaline::Client
     if message = update.message
       text = update.message.not_nil!.text.not_nil!
       response = HTTP::Client.get text
-      # options = Readability::Options.new(
-      #   tags: %w[article p document a aside b blockquote br code em h1 h2 h3 h4 hr i li ol p pre s strong u ul],
-      #   remove_empty_nodes: true,
-      #   attributes: %w[href src],
-      #   blacklist: %w[figcaption figure div]
-      # )
-      document = Readability::Document.new(response.body)
+      options = Readability::Options.new(
+        tags: %w[article p document a aside b blockquote br code em h1 h2 h3 h4 hr i li ol p pre s strong u ul],
+        remove_empty_nodes: true,
+        attributes: %w[href src],
+        blacklist: %w[figcaption figure]
+      )
+      document = Readability::Document.new(response.body, options)
       text = document.content
       text = text.not_nil!
-      message.reply(text)
-      access_token = "3330dae43d9a721f632d23a7bb241adc23630a582c3e93c9d6d9d6b6a283"
-      content = ["#{text}"]
-      response = Telegraph.create_page(access_token, title = "lulzx", author_name = "lulzx", author_url = "https://t.me/lulzx", %|content|, false)
-      x = JSON.parse(response)
-      status = x["ok"]
-      begin
-        if (status == true)
-          text = x["result"]["url"]
-        else
-          text = x["error"]
-        end
-      rescue exception : KeyError
-        puts "#{exception}"
-      end
+      html = <<-HTML
+      #{text}
+      HTML
+      
+      myhtml = Myhtml::Parser.new(html)
+
+      text = myhtml.to_pretty_html
+      parser = Myhtml::Parser.new(str, tree_options: Myhtml::Lib::MyhtmlTreeParseFlags::MyHTML_TREE_PARSE_FLAGS_SKIP_WHITESPACE_TOKEN)
+      puts walk(parser.root!)
       message.reply(text)
     end
   end

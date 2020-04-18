@@ -1,0 +1,15 @@
+access_token = "3330dae43d9a721f632d23a7bb241adc23630a582c3e93c9d6d9d6b6a283"
+      content = ["#{text}"]
+      response = Telegraph.create_page(access_token, title = "lulzx", author_name = "lulzx", author_url = "https://t.me/lulzx", %|content|, false)
+      x = JSON.parse(response)
+      status = x["ok"]
+      begin
+        if (status == true)
+          text = x["result"]["url"]
+        else
+          text = x["error"]
+        end
+      rescue exception : KeyError
+        puts "#{exception}"
+      end
+      message.reply(text)
